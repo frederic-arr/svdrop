@@ -48,35 +48,34 @@
 
 		getDraggable().then(({ Sortable, Plugins }) => {
 			const sortable = new Sortable<EventNames>([], {
-				// ...options,
+				...options,
 				mirror: {
-					constrainDimensions: true
-					// ...options.mirror
+					constrainDimensions: true,
+					...(options.mirror === undefined ? {} : options.mirror)
 				},
 				draggable: `.${draggableClass}`,
 				handle,
 				plugins: addPlugins ? [Plugins.SortAnimation] : []
 			});
 
-			// sortable.on('draggable:initialize', (...data) => events.ondraggableinitialize?.(...data));
-			// sortable.on('draggable:destroy', (...data) => events.ondraggabledestroy?.(...data));
-			// sortable.on('drag:start', (...data) => events.ondragstart?.(...data));
-			// sortable.on('drag:move', (...data) => events.ondragmove?.(...data));
-			// sortable.on('drag:over', (...data) => events.ondragover?.(...data));
-			// sortable.on('drag:over:container', (...data) => events.ondragovercontainer?.(...data));
-			// sortable.on('drag:out', (...data) => events.ondragout?.(...data));
-			// sortable.on('drag:out:container', (...data) => events.ondragoutcontainer?.(...data));
-			// sortable.on('drag:stop', (...data) => events.ondragstop?.(...data));
-			// sortable.on('drag:pressure', (...data) => events.ondragpressure?.(...data));
-			// sortable.on('mirror:create', (...data) => events.onmirrorcreate?.(...data));
-			// sortable.on('mirror:created', (...data) => events.onmirrorcreated?.(...data));
-			// sortable.on('mirror:attached', (...data) => events.onmirrorattached?.(...data));
-			// sortable.on('mirror:move', (...data) => events.onmirrormove?.(...data));
-			// sortable.on('mirror:destroy', (...data) => events.onmirrordestroy?.(...data));
-			// sortable.on('sortable:start', (...data) => events.onsortablestart?.(...data));
-			// sortable.on('sortable:sort', (...data) => events.onsortablesort?.(...data));
-			// sortable.on('sortable:sorted', (...data) => events.onsortablesorted?.(...data));
-			// sortable.on('sortable:stop', (...data) => events.onsortablestop?.(...data));
+			sortable.on('draggable:initialize', (...data) => events.ondraggableinitialize?.(...data));
+			sortable.on('draggable:destroy', (...data) => events.ondraggabledestroy?.(...data));
+			sortable.on('drag:start', (...data) => events.ondragstart?.(...data));
+			sortable.on('drag:move', (...data) => events.ondragmove?.(...data));
+			sortable.on('drag:over', (...data) => events.ondragover?.(...data));
+			sortable.on('drag:over:container', (...data) => events.ondragovercontainer?.(...data));
+			sortable.on('drag:out', (...data) => events.ondragout?.(...data));
+			sortable.on('drag:out:container', (...data) => events.ondragoutcontainer?.(...data));
+			sortable.on('drag:stop', (...data) => events.ondragstop?.(...data));
+			sortable.on('drag:pressure', (...data) => events.ondragpressure?.(...data));
+			sortable.on('mirror:create', (...data) => events.onmirrorcreate?.(...data));
+			sortable.on('mirror:created', (...data) => events.onmirrorcreated?.(...data));
+			sortable.on('mirror:attached', (...data) => events.onmirrorattached?.(...data));
+			sortable.on('mirror:move', (...data) => events.onmirrormove?.(...data));
+			sortable.on('mirror:destroy', (...data) => events.onmirrordestroy?.(...data));
+			sortable.on('sortable:start', (...data) => events.onsortablestart?.(...data));
+			sortable.on('sortable:sort', (...data) => events.onsortablesort?.(...data));
+			sortable.on('sortable:sorted', (...data) => events.onsortablesorted?.(...data));
 
 			sortable.on('sortable:stop', async (data) => {
 				const { oldIndex, oldContainer, newIndex, newContainer } = data;
@@ -108,7 +107,7 @@
 
 				const removed = oldData.splice(oldIndex, 1);
 				newData.splice(newIndex, 0, removed[0]);
-				// events.onsortablestop?.(data);
+				events.onsortablestop?.(data);
 			});
 
 			teardown = () => {
